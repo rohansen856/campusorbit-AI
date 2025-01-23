@@ -76,6 +76,7 @@ def train_vector_store():
         return jsonify({
             "status": "error", 
             "message": "Vector store training failed",
+            "tokens": 500,
             "details": str(e)
         }), 500
 
@@ -97,7 +98,8 @@ def schedule_query():
             return jsonify({
                 "status": "error", 
                 "message": "Input validation failed",
-                "errors": validation_err.messages
+                "tokens": 500,
+                "details": validation_err.messages
             }), 400
         
         # Extract validated data
@@ -119,6 +121,7 @@ def schedule_query():
             return jsonify({
                 "status": "warning", 
                 "message": "No relevant information found",
+                "tokens": 500,
                 "details": "The query did not match any schedules or information"
             }), 404
         
@@ -133,6 +136,7 @@ def schedule_query():
         return jsonify({
             "status": "error", 
             "message": "Invalid request format",
+            "tokens": 500,
             "details": str(bad_req)
         }), 400
     
@@ -142,6 +146,7 @@ def schedule_query():
         return jsonify({
             "status": "error", 
             "message": "Invalid input value",
+            "tokens": 500,
             "details": str(val_err)
         }), 400
     
@@ -151,6 +156,7 @@ def schedule_query():
         return jsonify({
             "status": "error", 
             "message": "An unexpected error occurred",
+            "tokens": 500,
             "details": "Please contact support if this persists"
         }), 500
 
@@ -161,6 +167,7 @@ def bad_request(error):
     return jsonify({
         "status": "error", 
         "message": "Bad Request",
+        "tokens": 500,
         "details": str(error)
     }), 400
 
@@ -170,6 +177,7 @@ def not_found(error):
     return jsonify({
         "status": "error", 
         "message": "Resource Not Found",
+        "tokens": 500,
         "details": str(error)
     }), 404
 
@@ -179,5 +187,6 @@ def internal_error(error):
     return jsonify({
         "status": "error", 
         "message": "Internal Server Error",
+        "tokens": 500,
         "details": "An unexpected error occurred on the server"
     }), 500
